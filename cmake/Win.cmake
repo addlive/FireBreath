@@ -58,8 +58,11 @@ if (NOT ATL_INCLUDE_DIR)
             file (GLOB DDK_DIRS
                 ${SEARCH_DIR}/*)
             foreach(DDKDIR ${DDK_DIRS})
-                file(GLOB ATL_CUR
-                    ${DDKDIR}/lib/atl/i386)
+                if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+                    file(GLOB ATL_CUR ${DDKDIR}/lib/atl/amd64)
+                else()
+                    file(GLOB ATL_CUR ${DDKDIR}/lib/atl/i386)
+                endif()
                 SET(ATLLIB_GUESSES ${ATLLIB_GUESSES} ${ATL_CUR})
             endforeach()
         endif()
